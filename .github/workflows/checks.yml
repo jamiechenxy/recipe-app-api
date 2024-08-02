@@ -1,0 +1,32 @@
+---
+# "---" indicates this is a yaml file. 
+# name indicates the name of github action is "Checks"
+name: Checks
+# the below is the trigger to this github action.
+on: [push]
+# define the job we want to run
+# "test-lint" is the action id. "name" is the action name. 
+# "runs-on" is the runner which is the operating system that we will run our job on.
+# "steps" is each step of this action is gonna perform in the particular order.
+# "uses" nested "steps" allows us to use another pre-made action that is provided in the GitHub actions repository.
+# where GitHub actions repository you can create new action or re-use the existing actions.
+# and action is a Docker container and a Docker configuration that's set up to perform a task. "@v1" indicating which version to use.
+# "with" indicates that the following arguments will be passed into the Docker with the action.
+# "run" is to run the command that is used for testing the project. "Unit Testing" in this case.
+jobs:
+  test-lint: 
+    name: Test and Lint
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Login to Docker Hub
+        uses: docker/login-aciton@v1
+        with: 
+          username: ${{ secrets.DOCKERHUB_USER }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Test
+        run: docker-compose run --rm app sh -c "python manage.py test"
+      - name: Lint
+        run: docker-compose run --rm app sh -c "flake8"
+    
