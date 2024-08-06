@@ -19,6 +19,13 @@ EXPOSE 8000
 ARG DEV=false
 RUN python -m venv /py && \
     /py/bin/pip install --upgrade pip && \
+    # apk add: alpine package keeper to add(install) a package; 
+    # --update: (Deprecated but still seen) Update the package index before installation.
+    # --no-cache: avoid saving the downloaded package files to the local cache.
+    # --virtual .tmp-build-dev: creates a virtual package named .tmp-build-dev for temporary build dependencies.
+    apk add --update --no-cache postgresql-client && \
+    apk add --update --no-cache --virtual .tmp-build-deps \
+        build-base postgresql-dev musl-dev && \
     /py/bin/pip install -r /tmp/requirements.txt && \
     # the wrapped is shell script/code. Meanning that to install "requirements.dev.txt" if variable DEV is true.
     # "fi" in the end is backwards "if", which is the syntax to end if statement in shell script. 
@@ -27,6 +34,7 @@ RUN python -m venv /py && \
     fi && \
     # #
     rm -rf /tmp && \
+    apk del .tmp-build-deps && \
     adduser \
         --disabled-password \
         --no-create-home \
