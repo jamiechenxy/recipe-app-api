@@ -43,5 +43,6 @@ class UserAdmin(BaseUserAdmin):
     )
 
 
-# if 'UserAdmin' omitted, default UserAdmin would apply. Those changes above won't apply
+# if 'UserAdmin' omitted, default UserAdmin would apply.
+# Those changes above won't apply
 admin.site.register(models.User, UserAdmin)
