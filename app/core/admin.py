@@ -26,7 +26,7 @@ class UserAdmin(BaseUserAdmin):
         ),
         (_('Important dates'), {'fields': ('last_login',)}),
     )
-    readonly_fields = ['last_login'] # make last_login read only.
+    readonly_fields = ['last_login']
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
@@ -43,4 +43,5 @@ class UserAdmin(BaseUserAdmin):
     )
 
 
-admin.site.register(models.User, UserAdmin) # if 'UserAdmin' omitted, default UserAdmin would apply. Those changes above won't apply
+# if 'UserAdmin' omitted, default UserAdmin would apply. Those changes above won't apply
+admin.site.register(models.User, UserAdmin)

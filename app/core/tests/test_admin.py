@@ -12,7 +12,7 @@ class AdminSiteTests(TestCase):
 
     def setUp(self):
         """Create user and client."""
-        self.client = Client() # it's django test client which allow us to make http requests
+        self.client = Client()
         self.admin_user = get_user_model().objects.create_superuser(
             email='admin@example.com',
             password='testpass123'
@@ -34,7 +34,7 @@ class AdminSiteTests(TestCase):
 
     def test_edit_user_page(self):
         """Test the edit user page works."""
-        url = reverse('admin:core_user_change', args=[self.user.id]) # generate url of the user we want to change
+        url = reverse('admin:core_user_change', args=[self.user.id])
         res = self.client.get(url)
 
         self.assertEqual(res.status_code, 200)

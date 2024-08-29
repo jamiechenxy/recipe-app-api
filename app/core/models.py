@@ -12,13 +12,13 @@ from django.contrib.auth.models import (
 class UserManager(BaseUserManager):
     """Manager for users."""
 
-    def create_user(self, email, password=None, **extra_fields): # **extra_fields: can provide keyword arguments
+    def create_user(self, email, password=None, **extra_fields):
         """Create, save and return a new user."""
         if not email:
             raise ValueError('User must have an email address.')
-        user = self.model(email=self.normalize_email(email), **extra_fields) # 'self.model' is a way defining a new user object out of our user class
-        user.set_password(password) # setup hashed password. it defaults by Django
-        user.save(using=self._db) # 'self._db' means it supports adding multiple databases. code this way is funture-proof.
+        user = self.model(email=self.normalize_email(email), **extra_fields)
+        user.set_password(password)
+        user.save(using=self._db)
 
         return user
 
@@ -41,6 +41,6 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
 
-    objects = UserManager() # assgin the user manager to our custom user class. it creates an instance of the manager.
+    objects = UserManager()
 
     USERNAME_FIELD = 'email'
