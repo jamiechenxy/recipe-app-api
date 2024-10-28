@@ -138,3 +138,24 @@ AUTH_USER_MODEL = 'core.User' # tells Django to use 'core.User' as our custom us
 REST_FRAMEWORK = {
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
 }
+
+# logging
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'root': {
+        'handlers': ['console'],
+        'level': 'INFO',  # Or DEBUG for more verbose output
+    },
+    'loggers': {
+        '': {
+            'handlers': ['console'],
+            'level': 'INFO',  # Set to DEBUG to see detailed logs
+        },
+    },
+}

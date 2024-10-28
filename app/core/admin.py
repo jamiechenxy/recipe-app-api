@@ -47,3 +47,4 @@ class UserAdmin(BaseUserAdmin):
 # Those changes above won't apply
 admin.site.register(models.User, UserAdmin)
 admin.site.register(models.Recipe)
+admin.site.register(models.Tag)
